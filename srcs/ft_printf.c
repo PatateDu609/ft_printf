@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   ft_printf.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gboucett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:16 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/14 19:14:21 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/15 17:49:42 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
-static int		ft_isformat(char c)
+static int		ft_isformat_or_flag(char c)
 {
 	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' ||
-			c == 'u' || c == 'x' || c == 'X' || c == '%');
+			c == 'u' || c == 'x' || c == 'X' || c == '%' || c == '.' ||
+			c == '-' || c == '*' || ft_isdigit(c));
 }
 
 static int		ft_parse(const char **str, va_list args)
@@ -25,7 +25,7 @@ static int		ft_parse(const char **str, va_list args)
 
 	*str += 1;
 	printed = 0;
-	while (**str && ft_isformat(**str))
+	while (**str && ft_isformat_or_flag(**str))
 	{
 		if (**str == 'c' || **str == '%')
 			printed += ft_putchar((**str == '%' ? '%' : va_arg(args, int)));

@@ -1,21 +1,48 @@
-SRCS				= ft_puthexa.c \
-						ft_putptr.c \
-						ft_printf.c \
-						ft_putchar.c \
-						ft_putstr.c \
-						ft_putunsigned.c \
-						ft_putnbr.c
-OBJS				= ${SRCS:.c=.o}
-GCC					= gcc
-NAME				= libftprintf.a
-RM					= rm -f
-LIBFT_PATH			= libft
-LIBFT_MAKE			= libft_makefile
-LIBFT				= ${LIBFT_PATH}/libft.a
-CFLAGS				= -Wall -Wextra -Werror -I${LIBFT_PATH}
+################################################################################
+#                               Name of the output                             #
+################################################################################
+NAME				=	libftprintf.a
 
-.c.o:
-					${GCC} ${CFLAGS} -c $< -o ${<:.c=.o}
+################################################################################
+#                          Paths of sources and objects                        #
+################################################################################
+PATH_SRCS			=	srcs
+PATH_OBJS			=	objs
+
+################################################################################
+#                                 Libft's infos                                #
+################################################################################
+LIBFT_PATH			=	libft
+LIBFT_MAKE			=	libft_makefile
+LIBFT				=	${LIBFT_PATH}/libft.a
+
+################################################################################
+#                              Name of sources files                           #
+################################################################################
+SRCS_BASENAME		=	ft_puthexa.c		\
+						ft_putptr.c			\
+						ft_printf.c			\
+						ft_putchar.c		\
+						ft_putstr.c			\
+						ft_putunsigned.c	\
+						ft_putnbr.c			\
+						ft_flags.c
+
+################################################################################
+#                             Commands and arguments                           #
+################################################################################
+RM					=	rm -f
+GCC					=	gcc
+CFLAGS				=	-Wall -Wextra -Werror -I${LIBFT_PATH}
+
+################################################################################
+#                         DO NOT MODIFY BELOW THIS POINT                       #
+################################################################################
+SRCS				=	$(addprefix ${PATH_SRCS}/, ${SRCS_BASENAME})
+OBJS				=	$(addprefix ${PATH_OBJS}/, ${SRCS_BASENAME:.c=.o})
+
+$(PATH_OBJS)/%.o:	$(PATH_SRCS)/%.c
+					${GCC} ${CFLAGS} -c $< -o $@
 
 $(NAME):			${OBJS} ${LIBFT}
 					ar rc ${NAME} ${OBJS}
