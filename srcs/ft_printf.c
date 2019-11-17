@@ -42,37 +42,28 @@
 // 	return (printed);
 // }
 
-static t_flags		ft_parse(const char **str)
+t_flags		ft_parse(const char **str, va_list args)
 {
 	t_flags		flags;
 	int			waiting;
 
 	*str += 1;
-	flags = (t_flags){ 0, 1, 0 };
-	waiting = 1;
+	flags = (t_flags){ F_RIGHT, 1, 0, F_NO_PREFIX };
+	waiting = W_FIRST_FLAG;
 	while (**str && ft_isformat_or_flag(**str))
 	{
-		if (!flags.prefix && (**str == '0' || **str == ' '))
-			flags.prefix = (**str == '0') ? 1 : 2;
-		else if (!flags.alignment && **str == '-')
-			flags.alignment = 1;
-		else if (waiting != 0 && !ft_isdigit(**str))
-			waiting = 0;
-		else if ((waiting == 1 || waiting == 3) && **str == '.')
-			waiting = 2;
-		else if (waiting == 1 && ft_isdigit(**str))
-		{
-			flags.length = ft_flag_numbers(str);
-			waiting = 3;
-		}
-		else if (waiting == 2 && ft_isdigit(**str))
-		{
-			flags.precision = ft_flag_numbers(str);
-			waiting = 0;
-		}
+		if (waiting == W_FIRST_FLAG && (**str == '0' || **str == ' '))
+			ft_prefix(&flags, **str);
+		else if (waiting == W_FIRST_FLAG
+				&& (flags.alignment == F_RIGHT && **str == '-'))
+			ft_alignment(&flags);
+		else if (waiting != W_NOTHING && **str == '.')
+			waiting = W_PRECISION;
+		else if (**str == '*')
+			ft_star(&flags, &waiting, va_arg(args, int));
+		*str += 1;
 	}
-	printf("%s\n", *str);
-	printf("end of ft_parse.\n");
+	printf("end of ft_parse.\n\n");
 	return (flags);
 }
 
@@ -86,7 +77,7 @@ int					ft_printf(const char *str, ...)
 	if (*str)
 	{
 		if (*str == '%')
-			ft_parse(&str);
+			ft_parse(&str, args);
 		else
 			printed += write(1, str++, 1);
 	}

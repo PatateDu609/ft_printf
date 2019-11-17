@@ -45,7 +45,7 @@ $(PATH_OBJS)/%.o:	$(PATH_SRCS)/%.c
 					${GCC} ${CFLAGS} -c $< -o $@
 
 $(NAME):			${OBJS} ${LIBFT}
-					ar rc ${NAME} ${OBJS}
+					ar rcs ${NAME} ${OBJS}
 					ranlib ${NAME}
 
 ${LIBFT}:
