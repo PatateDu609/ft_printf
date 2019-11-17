@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:33:57 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/15 16:40:54 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 23:36:10 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int		ft_putnbr(int n)
 	result = 1;
 	nbr = (n < 0) ? -n : n;
 	if (n < 0)
-		result += ft_putchar('-');
-	ft_putunsigned(nbr, &result);
+		ft_putchar_fd('-', 1);
+	//ft_putunsigned(nbr, &result, flags);
 	return (result);
 }

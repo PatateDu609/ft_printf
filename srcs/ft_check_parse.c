@@ -6,13 +6,13 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/17 14:20:51 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 14:23:09 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 17:50:34 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int			ft_isformat_or_flag(char c)
+int		ft_isformat_or_flag(char c)
 {
 	return (ft_isformat(c) || ft_isflag(c));
 }

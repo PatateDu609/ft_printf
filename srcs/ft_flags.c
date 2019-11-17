@@ -6,14 +6,14 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 15:08:29 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 18:10:54 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-void				ft_prefix(t_flags *flags, char current)
+void		ft_prefix(t_flags *flags, char current)
 {
 	if (flags->prefix == F_NO_PREFIX)
 	{
@@ -32,7 +32,7 @@ void				ft_prefix(t_flags *flags, char current)
 		flags->prefix = (flags->prefix == F_ZERO) ? F_NO_PREFIX : F_SPACE;
 }
 
-void			ft_alignment(t_flags *flags)
+void		ft_alignment(t_flags *flags)
 {
 	if (flags->alignment == F_RIGHT)
 	{
@@ -41,14 +41,15 @@ void			ft_alignment(t_flags *flags)
 	}
 }
 
-void	ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
+void		ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
 {
 	int		result;
 
 	result = ft_atoi(*str);
 	while (**str && ft_isdigit(**str))
 		*str += 1;
-	if (*waiting == W_LENGTH)
+	*str -= 1;
+	if (*waiting == W_LENGTH || *waiting == W_FIRST_FLAG)
 	{
 		flags->length = result;
 		*waiting = W_PRECISION;
@@ -60,25 +61,46 @@ void	ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
 	}
 }
 
-void			ft_star(t_flags *flags, int *waiting, int number)
+void		ft_star(t_flags *flags, int *waiting, va_list args)
 {
-	if (*waiting == W_LENGTH)
+	if (*waiting == W_LENGTH || *waiting == W_FIRST_FLAG)
 	{
-		flags->length = number;
-		*waiting = W_PRECISION;
+		flags->length = va_arg(args, int);
+		*waiting = W_POINT;
 	}
 	else if (*waiting == W_PRECISION)
 	{
-		flags->precision = number;
+		flags->precision = va_arg(args, int);
 		*waiting = W_NOTHING;
 	}
 }
 
-int		ft_print(t_flags flags, va_list args)
+t_flags		ft_parse(const char **str, va_list args)
 {
-	int result;
-	(void) flags;
-	(void) args;
-	result = 4;
-	return (result);
+	t_flags		flags;
+	int			waiting;
+
+	*str += 1;
+	flags = (t_flags){ F_RIGHT, 1, F_DEF_PREC, F_NO_PREFIX, 0 };
+	waiting = W_FIRST_FLAG;
+	while (**str && ft_isformat_or_flag(**str))
+	{
+		if (waiting == W_FIRST_FLAG && (**str == '0' || **str == ' '))
+			ft_prefix(&flags, **str);
+		else if (waiting == W_FIRST_FLAG
+				&& (flags.alignment == F_RIGHT && **str == '-'))
+			ft_alignment(&flags);
+		else if (waiting != W_NOTHING && **str == '.')
+			waiting = W_PRECISION;
+		else if (**str == '*')
+			ft_star(&flags, &waiting, args);
+		else if (ft_isformat(**str))
+			flags.conversion = **str;
+		else if (ft_isdigit(**str))
+			ft_flag_numbers(&flags, str, &waiting);
+		if (flags.conversion)
+			break;
+		*str += 1;
+	}
+	return (flags);
 }

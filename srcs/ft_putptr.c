@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_putptr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gboucett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:55:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/14 18:55:20 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 20:45:57 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int		ft_putptr(void *ptr)
 	int				result;
 
 	p = (unsigned long)ptr;
-	result = ft_putstr("0x");
+	result = 0;
+	ft_putstr_fd("0x", 1);
 	ft_puthexa(1, p, &result);
 	return (result + 1);
 }
