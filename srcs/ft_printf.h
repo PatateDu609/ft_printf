@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:12:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/15 21:27:06 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 15:10:35 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 # include <stdarg.h>
 # include <stdlib.h>
 # include <unistd.h>
-
 
 /*
 **	F_*			: defines about flags' values
@@ -58,6 +57,7 @@ typedef struct	s_flags
 	int			length;
 	int			precision;
 	int			prefix;
+	char		conversion;
 }				t_flags;
 
 void			ft_puthexa(int mode, unsigned long n, int *size);
@@ -66,15 +66,16 @@ int				ft_putchar(char c);
 int				ft_putstr(char *c);
 int				ft_putnbr(int n);
 void			ft_putunsigned(unsigned int n, int *size);
+int				ft_print(t_flags flags, va_list args);
 
-int				ft_flag_numbers(const char **str);
 int				ft_isformat_or_flag(char c);
+int				ft_isformat(char c);
+int				ft_isflag(char c);
+
+void			ft_flag_numbers(t_flags *flags, const char **str, int *waiting);
 void			ft_prefix(t_flags *flags, char current);
 void			ft_alignment(t_flags *flags);
-void			ft_length(t_flags *flags, int *waiting, char *str);
-void			ft_precision(t_flags *flags, int *waiting, char *str);
 void			ft_star(t_flags *flags, int *waiting, int number);
-t_flags			ft_parse(const char **str, va_list args);
 
 int				ft_printf(const char *str, ...);
 

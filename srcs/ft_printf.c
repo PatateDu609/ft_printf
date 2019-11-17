@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:16 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/15 21:46:14 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 15:10:20 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@
 // 	return (printed);
 // }
 
-t_flags		ft_parse(const char **str, va_list args)
+static t_flags		ft_parse(const char **str, va_list args)
 {
 	t_flags		flags;
 	int			waiting;
 
 	*str += 1;
-	flags = (t_flags){ F_RIGHT, 1, 0, F_NO_PREFIX };
+	flags = (t_flags){ F_RIGHT, 1, 0, F_NO_PREFIX, 0 };
 	waiting = W_FIRST_FLAG;
 	while (**str && ft_isformat_or_flag(**str))
 	{
@@ -61,6 +61,10 @@ t_flags		ft_parse(const char **str, va_list args)
 			waiting = W_PRECISION;
 		else if (**str == '*')
 			ft_star(&flags, &waiting, va_arg(args, int));
+		else if (ft_isformat(**str))
+			flags.conversion = **str;
+		else if (ft_isdigit(**str))
+			ft_flag_numbers(&flags, str, &waiting);
 		*str += 1;
 	}
 	printf("end of ft_parse.\n\n");
@@ -71,13 +75,17 @@ int					ft_printf(const char *str, ...)
 {
 	va_list		args;
 	int			printed;
+	t_flags		flags;
 
 	va_start(args, str);
 	printed = 0;
 	if (*str)
 	{
 		if (*str == '%')
-			ft_parse(&str, args);
+		{
+			flags = ft_parse(&str, args);
+			printed += ft_print(flags, args);
+		}
 		else
 			printed += write(1, str++, 1);
 	}

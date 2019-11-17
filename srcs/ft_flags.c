@@ -6,19 +6,12 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/15 20:23:14 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/17 15:08:29 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-
-int			ft_isformat_or_flag(char c)
-{
-	return (c == 'c' || c == 's' || c == 'p' || c == 'd' || c == 'i' ||
-			c == 'u' || c == 'x' || c == 'X' || c == '%' || c == '.' ||
-			c == '-' || c == '*' || c == ' ' || ft_isdigit(c));
-}
 
 void				ft_prefix(t_flags *flags, char current)
 {
@@ -48,6 +41,25 @@ void			ft_alignment(t_flags *flags)
 	}
 }
 
+void	ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
+{
+	int		result;
+
+	result = ft_atoi(*str);
+	while (**str && ft_isdigit(**str))
+		*str += 1;
+	if (*waiting == W_LENGTH)
+	{
+		flags->length = result;
+		*waiting = W_PRECISION;
+	}
+	else if (*waiting == W_PRECISION)
+	{
+		flags->precision = result;
+		*waiting = W_NOTHING;
+	}
+}
+
 void			ft_star(t_flags *flags, int *waiting, int number)
 {
 	if (*waiting == W_LENGTH)
@@ -62,10 +74,11 @@ void			ft_star(t_flags *flags, int *waiting, int number)
 	}
 }
 
-int		ft_print(char *format)
+int		ft_print(t_flags flags, va_list args)
 {
 	int result;
-
-	result = *format;
+	(void) flags;
+	(void) args;
+	result = 4;
 	return (result);
 }

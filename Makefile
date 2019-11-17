@@ -26,7 +26,8 @@ SRCS_BASENAME		=	ft_puthexa.c		\
 						ft_putstr.c			\
 						ft_putunsigned.c	\
 						ft_putnbr.c			\
-						ft_flags.c
+						ft_flags.c			\
+						ft_check_parse.c
 
 ################################################################################
 #                             Commands and arguments                           #
@@ -45,7 +46,7 @@ $(PATH_OBJS)/%.o:	$(PATH_SRCS)/%.c
 					${GCC} ${CFLAGS} -c $< -o $@
 
 $(NAME):			${OBJS} ${LIBFT}
-					ar rcs ${NAME} ${OBJS}
+					ar rc ${NAME} ${OBJS}
 					ranlib ${NAME}
 
 ${LIBFT}:
