@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:12:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 23:14:09 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/18 22:28:27 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,11 @@ void			ft_putunsigned(unsigned int n, int *size, t_flags flags);
 int				ft_putnbr(int n, t_flags flags);
 void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags);
 int				ft_putptr(void *ptr, t_flags flags);
+
+void			ft_print_nbr(unsigned int n);
+int				ft_size_base(unsigned int n, size_t size, int base);
+void			ft_print_prefix(t_flags flags, int len);
+void			ft_print_zeroes(int len, int precision);
 
 int				ft_isformat_or_flag(char c);
 int				ft_isformat(char c);

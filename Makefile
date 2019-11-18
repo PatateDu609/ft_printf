@@ -27,7 +27,8 @@ SRCS_BASENAME		=	ft_puthexa.c		\
 						ft_putunsigned.c	\
 						ft_putnbr.c			\
 						ft_flags.c			\
-						ft_check_parse.c
+						ft_check_parse.c	\
+						ft_nbr_utils.c
 
 ################################################################################
 #                             Commands and arguments                           #

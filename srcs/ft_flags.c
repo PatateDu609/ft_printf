@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 18:10:54 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/18 23:30:19 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
 	if (*waiting == W_LENGTH || *waiting == W_FIRST_FLAG)
 	{
 		flags->length = result;
-		*waiting = W_PRECISION;
+		*waiting = W_POINT;
 	}
 	else if (*waiting == W_PRECISION)
 	{
@@ -80,15 +80,13 @@ t_flags		ft_parse(const char **str, va_list args)
 	t_flags		flags;
 	int			waiting;
 
-	*str += 1;
 	flags = (t_flags){ F_RIGHT, 1, F_DEF_PREC, F_NO_PREFIX, 0 };
 	waiting = W_FIRST_FLAG;
 	while (**str && ft_isformat_or_flag(**str))
 	{
 		if (waiting == W_FIRST_FLAG && (**str == '0' || **str == ' '))
 			ft_prefix(&flags, **str);
-		else if (waiting == W_FIRST_FLAG
-				&& (flags.alignment == F_RIGHT && **str == '-'))
+		else if (waiting == W_FIRST_FLAG && **str == '-')
 			ft_alignment(&flags);
 		else if (waiting != W_NOTHING && **str == '.')
 			waiting = W_PRECISION;
@@ -99,7 +97,7 @@ t_flags		ft_parse(const char **str, va_list args)
 		else if (ft_isdigit(**str))
 			ft_flag_numbers(&flags, str, &waiting);
 		if (flags.conversion)
-			break;
+			break ;
 		*str += 1;
 	}
 	if (flags.precision == F_DEF_PREC && waiting == W_PRECISION)
