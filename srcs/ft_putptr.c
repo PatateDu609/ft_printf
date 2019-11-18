@@ -12,9 +12,7 @@
 
 #include "ft_printf.h"
 
-#include <stdio.h>
-
-int		ft_putptr(void *ptr)
+int		ft_putptr(void *ptr, t_flags flags)
 {
 	unsigned long	p;
 	int				result;
@@ -22,6 +20,6 @@ int		ft_putptr(void *ptr)
 	p = (unsigned long)ptr;
 	result = 0;
 	ft_putstr_fd("0x", 1);
-	ft_puthexa(1, p, &result);
+	ft_puthexa(1, p, &result, flags);
 	return (result + 1);
 }

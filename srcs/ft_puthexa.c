@@ -1,28 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_hexa.c                                          :+:      :+:    :+:   */
+/*   ft_puthexa.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: gboucett <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:09:24 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/12 18:09:30 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/18 09:48:15 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-void	ft_puthexa(int mode, unsigned long n, int *size)
+static void		ft_print_nbr(int mode, unsigned long n)
 {
-	char	*min;
-	char	*maj;
-
-	min = "0123456789abcdef";
-	maj = "0123456789ABCDEF";
 	if (n / 16)
-	{
-		*size += 1;
-		ft_puthexa(mode, n / 16, size);
-	}
-	ft_putchar_fd((mode ? min[n % 16] : maj[n % 16]), 1);
+		ft_print_nbr(mode, n / 16);
+	ft_putchar_fd(
+		(mode ? "0123456789abcdef"[n % 16] : "0123456789ABCDEF"[n % 16]), 1);
+}
+
+void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags)
+{
+	
 }

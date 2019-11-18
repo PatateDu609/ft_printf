@@ -12,7 +12,7 @@
 
 #include "ft_printf.h"
 
-int		ft_putnbr(int n)
+int		ft_putnbr(int n, t_flags flags)
 {
 	int				result;
 	unsigned int	nbr;
@@ -21,6 +21,6 @@ int		ft_putnbr(int n)
 	nbr = (n < 0) ? -n : n;
 	if (n < 0)
 		ft_putchar_fd('-', 1);
-	//ft_putunsigned(nbr, &result, flags);
+	ft_putunsigned(nbr, &result, flags);
 	return (result);
 }

@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+#include <stdio.h>
 
 static int		ft_size(unsigned int n, size_t size)
 {
@@ -28,37 +29,64 @@ static void		ft_print_nbr(unsigned int n)
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
-static void		ft_print_prefix(t_flags flags, size_t len)
+static void		ft_print_prefix(t_flags flags, int len)
 {
 	int		prefix;
 	char	pref;
+	int		size;
+	int		precision;
 
+	precision = (flags.precision == F_DEF_PREC) ? 1 : flags.precision;
+	if (len >= precision)
+		size = (flags.length <= len) ? len : flags.length;
+	else
+		size = (precision <= flags.length) ? flags.length : precision;
 	prefix = 0;
-	if (flags.prefix == F_ZERO || flags.prefix == F_ZERO_SPACE)
-		pref = '0';
-	else if (flags.prefix == F_SPACE)
-		pref = ' ';
-	while (prefix < flags.length - (int)len)
+	pref = ' ';
+	while (prefix < size - (precision < len ? len : precision))
 	{
 		write(1, &pref, 1);
 		prefix++;
 	}
 }
 
+static void		ft_print_zeroes(int len, int precision)
+{
+	int		zeroes;
+
+	zeroes = 0;
+	while (zeroes < precision - len)
+	{
+		write(1, "0", 1);
+		zeroes++;
+	}
+}
+
 void			ft_putunsigned(unsigned int n, int *size, t_flags flags)
 {
 	int		len;
+	int		precision;
 
+	precision = (flags.precision == F_DEF_PREC) ? 1 : flags.precision;
 	len = ft_size(n, 0);
 	if (flags.alignment == F_RIGHT)
 	{
 		ft_print_prefix(flags, len);
-		ft_print_nbr(n);
+		ft_print_zeroes(len, precision);
+		if (precision != 0 || n != 0)
+			ft_print_nbr(n);
 	}
 	else if (flags.alignment == F_LEFT)
 	{
-		ft_print_nbr(n);
+		ft_print_zeroes(len, precision);
+		if (precision != 0 || n != 0)
+			ft_print_nbr(n);
 		ft_print_prefix(flags, len);
 	}
-	*size = (len >= flags.length) ? len : flags.length;
+	if (precision == 0 && n == 0)
+		*size = 0;
+	else if (len >= precision)
+		*size = (flags.length <= len) ? len : flags.length;
+	else
+		*size = (precision <= flags.length) ? flags.length : precision;
 }

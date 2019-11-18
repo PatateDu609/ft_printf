@@ -102,5 +102,7 @@ t_flags		ft_parse(const char **str, va_list args)
 			break;
 		*str += 1;
 	}
+	if (flags.precision == F_DEF_PREC && waiting == W_PRECISION)
+		flags.precision = 0;
 	return (flags);
 }

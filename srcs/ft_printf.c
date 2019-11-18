@@ -45,12 +45,12 @@ static int		ft_print(t_flags flags, va_list args)
 		result += ft_putstr(va_arg(args, char*), flags);
 	else if (conv == 'u')
 		ft_putunsigned(va_arg(args, unsigned int), &result, flags);
+	else if (conv == 'd' || conv == 'i')
+		result += ft_putnbr(va_arg(args, int), flags);
+	else if (conv == 'x' || conv == 'X')
+		ft_puthexa(conv == 'x', va_arg(args, unsigned int), &result, flags);
 	// else if (conv == 'p')
-	// 	result += ft_putptr(va_arg(args, void*));
-	// else if (conv == 'd' || conv == 'i')
-	// 	result += ft_putnbr(va_arg(args, int));
-	// else if (conv == 'x' || conv == 'X')
-	// 	ft_puthexa(conv == 'x', va_arg(args, unsigned int), &result);
+	// 	result += ft_putptr(va_arg(args, void*), flags);
 	return (result);
 }
 

@@ -69,9 +69,9 @@ typedef struct	s_flags
 int				ft_putchar(char c, t_flags flags);
 int				ft_putstr(char *c, t_flags flags);
 void			ft_putunsigned(unsigned int n, int *size, t_flags flags);
-int				ft_putnbr(int n);
-void			ft_puthexa(int mode, unsigned long n, int *size);
-int				ft_putptr(void *ptr);
+int				ft_putnbr(int n, t_flags flags);
+void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags);
+int				ft_putptr(void *ptr, t_flags flags);
 
 int				ft_isformat_or_flag(char c);
 int				ft_isformat(char c);
