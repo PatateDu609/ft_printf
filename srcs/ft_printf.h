@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:12:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/18 22:28:27 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:13:57 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 /*
 **	alignment	: right (0) or left (1)
 **	length		: minimal length displayed (never truncate output)
+**	length_def	: is flags::length at it's default value (1) or not (0)
 **	precision	: precision on display (min or max caracter displayed)
 **	prefix		: is there any prefix (zero(1) or space(2) or both(3)) ?
 **	conversion	: conversion type (s, c, d, i, u, X, x, p, %)
@@ -61,6 +62,7 @@ typedef struct	s_flags
 {
 	int			alignment;
 	int			length;
+	int			length_def;
 	int			precision;
 	int			prefix;
 	char		conversion;
@@ -74,7 +76,7 @@ void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags);
 int				ft_putptr(void *ptr, t_flags flags);
 
 void			ft_print_nbr(unsigned int n);
-int				ft_size_base(unsigned int n, size_t size, int base);
+int				ft_size_base(unsigned long n, size_t size, int base);
 void			ft_print_prefix(t_flags flags, int len);
 void			ft_print_zeroes(int len, int precision);
 

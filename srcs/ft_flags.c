@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/18 23:30:19 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/19 21:33:12 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ void		ft_flag_numbers(t_flags *flags, const char **str, int *waiting)
 	if (*waiting == W_LENGTH || *waiting == W_FIRST_FLAG)
 	{
 		flags->length = result;
+		flags->length_def = 0;
 		*waiting = W_POINT;
 	}
 	else if (*waiting == W_PRECISION)
@@ -66,6 +67,7 @@ void		ft_star(t_flags *flags, int *waiting, va_list args)
 	if (*waiting == W_LENGTH || *waiting == W_FIRST_FLAG)
 	{
 		flags->length = va_arg(args, int);
+		flags->length_def = 0;
 		*waiting = W_POINT;
 	}
 	else if (*waiting == W_PRECISION)
@@ -80,7 +82,7 @@ t_flags		ft_parse(const char **str, va_list args)
 	t_flags		flags;
 	int			waiting;
 
-	flags = (t_flags){ F_RIGHT, 1, F_DEF_PREC, F_NO_PREFIX, 0 };
+	flags = (t_flags){ F_RIGHT, 1, 1, F_DEF_PREC, F_NO_PREFIX, 0 };
 	waiting = W_FIRST_FLAG;
 	while (**str && ft_isformat_or_flag(**str))
 	{

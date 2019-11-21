@@ -6,13 +6,13 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 22:24:55 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/18 22:29:39 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/19 22:13:49 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int		ft_size_base(unsigned int n, size_t size, int base)
+int		ft_size_base(unsigned long n, size_t size, int base)
 {
 	if (n == 0 && !size)
 		return (1);

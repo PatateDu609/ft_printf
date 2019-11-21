@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:16 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/18 22:39:28 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/21 15:35:35 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static int		ft_print(t_flags flags, va_list args)
 		ft_putunsigned(va_arg(args, unsigned int), &result, flags);
 	else if (conv == 'd' || conv == 'i')
 		result += ft_putnbr(va_arg(args, int), flags);
-	// else if (conv == 'x' || conv == 'X')
-	// 	ft_puthexa(conv == 'x', va_arg(args, unsigned int), &result, flags);
-	// else if (conv == 'p')
-	// 	result += ft_putptr(va_arg(args, void*), flags);
+	else if (conv == 'x' || conv == 'X')
+		ft_puthexa(conv == 'x', va_arg(args, unsigned int), &result, flags);
+	else if (conv == 'p')
+		result += ft_putptr(va_arg(args, void*), flags);
 	return (result);
 }
 
