@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:16 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/21 15:35:35 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:02:08 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,16 +33,12 @@ static int		ft_print(t_flags flags, va_list args)
 
 	conv = flags.conversion;
 	result = 0;
-	// printf("display current flags :\n");
-	// printf("Alignment : %s\n", (flags.alignment == F_LEFT) ? "left" : "right");
-	// printf("Length : %d\n", flags.length);
-	// printf("Prefix : %s\n", generate_prefix(flags.prefix));
-	// printf("Precision : %d\n", flags.precision);
-	// printf("Conversion : %c\n\n", flags.conversion);
 	if (conv == 'c' || conv == '%')
 		result += ft_putchar((conv == '%' ? '%' : va_arg(args, int)), flags);
 	else if (conv == 's')
-		result += ft_putstr(va_arg(args, char*), flags);
+	{
+		result += ft_putstrr(va_arg(args, const char *), flags);
+	}
 	else if (conv == 'u')
 		ft_putunsigned(va_arg(args, unsigned int), &result, flags);
 	else if (conv == 'd' || conv == 'i')

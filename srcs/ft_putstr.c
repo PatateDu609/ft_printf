@@ -6,14 +6,14 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:33:41 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 18:12:14 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/22 21:13:26 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-static int		ft_special_len(char *str, int precision)
+static int		ft_special_len(const char *str, int precision)
 {
 	int		len;
 	int		true_len;
@@ -27,7 +27,7 @@ static int		ft_special_len(char *str, int precision)
 	return (len);
 }
 
-static void		ft_disp(int len, char *str, t_flags flags)
+static void		ft_disp(int len, const char *str, t_flags flags)
 {
 	int spaces;
 
@@ -52,15 +52,19 @@ static void		ft_disp(int len, char *str, t_flags flags)
 	}
 }
 
-int				ft_putstr(char *str, t_flags flags)
+int				ft_putstrr(const char *str, t_flags flags)
 {
 	int		len;
 
-	if (flags.precision == 0)
+	if (flags.precision == 0 && flags.length_def)
 		return (0);
 	if (!str)
 		str = "(null)";
 	len = ft_special_len(str, flags.precision);
-	ft_disp(len, str, flags);
-	return ((flags.length < len) ? len : flags.length);
+	if (len || !flags.length_def)
+	{
+		ft_disp(len, str, flags);
+		return ((flags.length < len) ? len : flags.length);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:12:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/22 19:08:25 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/22 20:57:52 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ typedef struct	s_flags
 }				t_flags;
 
 int				ft_putchar(char c, t_flags flags);
-int				ft_putstr(char *c, t_flags flags);
+int				ft_putstrr(const char *str, t_flags flags);
 void			ft_putunsigned(unsigned int n, int *size, t_flags flags);
 int				ft_putnbr(int n, t_flags flags);
 void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags);
