@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 22:24:55 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/19 22:13:49 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:07:42 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,8 @@ void	ft_print_nbr(unsigned int n)
 	ft_putchar_fd(n % 10 + '0', 1);
 }
 
-void	ft_print_prefix(t_flags flags, int len)
+int		ft_size_prefix(t_flags flags, int len)
 {
-	int		prefix;
-	char	pref;
 	int		size;
 	int		precision;
 
@@ -40,13 +38,23 @@ void	ft_print_prefix(t_flags flags, int len)
 		size = (flags.length <= len) ? len : flags.length;
 	else
 		size = (precision <= flags.length) ? flags.length : precision;
+	return (size - (precision < len ? len : precision));
+}
+
+void	ft_print_prefix(t_flags flags, int len)
+{
+	int		prefix;
+	char	pref;
+	int		spaces;
+
+	spaces = ft_size_prefix(flags, len);
 	prefix = 0;
 	if ((flags.prefix == F_ZERO || flags.prefix == F_ZERO_SPACE)
 		&& flags.precision == F_DEF_PREC)
 		pref = '0';
 	else
 		pref = ' ';
-	while (prefix < size - (precision < len ? len : precision))
+	while (prefix < spaces)
 	{
 		write(1, &pref, 1);
 		prefix++;

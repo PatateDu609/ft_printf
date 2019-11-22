@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 19:12:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/19 22:13:57 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/22 19:08:25 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void			ft_print_nbr(unsigned int n);
 int				ft_size_base(unsigned long n, size_t size, int base);
 void			ft_print_prefix(t_flags flags, int len);
 void			ft_print_zeroes(int len, int precision);
+int				ft_size_prefix(t_flags flags, int len);
 
 int				ft_isformat_or_flag(char c);
 int				ft_isformat(char c);
