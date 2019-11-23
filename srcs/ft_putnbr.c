@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:33:57 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/21 16:16:45 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/23 21:38:02 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int		ft_result(int precision, int n, t_flags flags, int len)
 {
 	if (precision == 0 && n == 0)
 		return (flags.length_def ? 0 : flags.length);
-	if (len >= precision)
+	if (len > precision)
 		return ((flags.length <= len) ? len : flags.length);
 	else
 		return ((n < 0) +
@@ -43,12 +43,10 @@ static int		ft_result(int precision, int n, t_flags flags, int len)
 int				ft_putnbr(int n, t_flags flags)
 {
 	int				len;
-	unsigned int	nbr;
 	int				precision;
 
 	precision = (flags.precision == F_DEF_PREC) ? 1 : flags.precision;
-	nbr = (n < 0) ? -n : n;
-	len = ft_size_base(nbr, ((n < 0) ? 1 : 0), 10);
+	len = ft_size_base(n, 0, 10);
 	if (flags.alignment == F_RIGHT)
 	{
 		if (flags.prefix == F_ZERO && n < 0)

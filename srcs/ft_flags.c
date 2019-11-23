@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/19 21:33:12 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/23 22:03:35 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,6 @@ t_flags		ft_parse(const char **str, va_list args)
 			break ;
 		*str += 1;
 	}
-	if (flags.precision == F_DEF_PREC && waiting == W_PRECISION)
-		flags.precision = 0;
+	ft_update_flags(&flags, waiting);
 	return (flags);
 }

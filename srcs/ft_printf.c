@@ -6,25 +6,12 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 19:14:16 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/22 21:02:08 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/23 22:02:40 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
-
-// static char	*generate_prefix(int prefix)
-// {
-// 	if (prefix == F_NO_PREFIX)
-// 		return ("none");
-// 	else if (prefix == F_ZERO)
-// 		return ("zero");
-// 	else if (prefix == F_SPACE)
-// 		return ("space");
-// 	else if (prefix == F_ZERO_SPACE)
-// 		return ("zero and space");
-// 	return ("error");
-// }
 
 static int		ft_print(t_flags flags, va_list args)
 {
@@ -50,13 +37,16 @@ static int		ft_print(t_flags flags, va_list args)
 	return (result);
 }
 
-void			ft_update_flags(t_flags *flags)
+void			ft_update_flags(t_flags *flags, int waiting)
 {
-	if (flags->length < 0)
+	if (waiting == W_NOTHING && flags->length < 0)
 	{
 		flags->length *= -1;
 		flags->alignment = F_LEFT;
+		flags->prefix = (flags->prefix == F_ZERO) ? F_SPACE : F_NO_PREFIX;
 	}
+	if (flags->precision == F_DEF_PREC && waiting == W_PRECISION)
+		flags->precision = 0;
 }
 
 int				ft_printf(const char *str, ...)
@@ -73,7 +63,7 @@ int				ft_printf(const char *str, ...)
 		{
 			str++;
 			flags = ft_parse(&str, args);
-			ft_update_flags(&flags);
+			ft_update_flags(&flags, W_NOTHING);
 			printed += ft_print(flags, args);
 			str++;
 		}

@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 18:55:17 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/22 19:17:21 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/23 22:00:43 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int				ft_putptr(void *ptr, t_flags flags)
 	int				size;
 
 	p = (unsigned long)ptr;
-	size = ft_size_base(p, 2, 16)+ (!p ? 1 : 0);
+	size = ft_size_base(p, 2, 16) + (!p ? 1 : 0);
 	if (flags.alignment == F_RIGHT)
 	{
 		spaces = ft_size_prefix(flags, size);
