@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/15 16:42:36 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/23 22:03:35 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/25 20:42:54 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ void		ft_star(t_flags *flags, int *waiting, va_list args)
 	else if (*waiting == W_PRECISION)
 	{
 		flags->precision = va_arg(args, int);
+		if (flags->precision < 0)
+			flags->precision = F_DEF_PREC;
 		*waiting = W_NOTHING;
 	}
 }

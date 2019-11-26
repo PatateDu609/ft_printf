@@ -6,58 +6,100 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:33:57 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/23 21:38:02 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/26 22:12:58 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdio.h>
 
-static void		ft_print_signed(int n, int len, int precision, int sign)
+static int		ft_maxcar(int n, t_flags flags, int len)
 {
-	if (n < 0 && sign)
-		ft_putchar_fd('-', 1);
-	ft_print_zeroes((n < 0) ? len - 1 : len, precision);
-	if (precision != 0 || n != 0)
-		ft_print_nbr((n < 0 ? -n : n));
-}
-
-static void		ft_print_pref(t_flags flags, int len, int n)
-{
-	if (!flags.length_def && !flags.precision && !n)
-		len = 0;
-	ft_print_prefix(flags, len);
-}
-
-static int		ft_result(int precision, int n, t_flags flags, int len)
-{
-	if (precision == 0 && n == 0)
+	if (flags.precision == 0 && n == 0)
 		return (flags.length_def ? 0 : flags.length);
-	if (len > precision)
-		return ((flags.length <= len) ? len : flags.length);
-	else
-		return ((n < 0) +
-				(precision <= flags.length ? flags.length : precision));
+	else if (flags.length_def && flags.precision == F_DEF_PREC)
+		return (len);
+	else if (flags.precision != F_DEF_PREC && flags.length <= flags.precision)
+		return (flags.precision + (n < 0));
+	return (flags.length);
 }
 
-int				ft_putnbr(int n, t_flags flags)
+static void		ft_print_spaces(int n, t_flags flags, int len, int fix)
 {
-	int				len;
-	int				precision;
+	int		total;
+	int		spaces;
+	int		abs_len;
 
-	precision = (flags.precision == F_DEF_PREC) ? 1 : flags.precision;
+	if (fix <= 0)
+	{
+		abs_len = len - (n < 0);
+		total = flags.length - (flags.precision <= abs_len ? len
+				: flags.precision + (n < 0));
+		spaces = 0;
+		while (spaces < total)
+		{
+			ft_putchar_fd(flags.prefix == F_ZERO &&
+						flags.precision == F_DEF_PREC ? '0' : ' ', 1);
+			spaces++;
+		}
+	}
+	else
+		write(1, " ", fix);
+}
+
+static void		ft_print_zeroes_d(int len, t_flags flags, int sign)
+{
+	int		zeroes;
+
+	zeroes = 0;
+	while (zeroes < flags.precision - len + sign)
+	{
+		write(1, "0", 1);
+		zeroes++;
+	}
+}
+
+static int		ft_print_prec_null(int n, t_flags flags)
+{
+	if (flags.precision != 0 || n != 0)
+		return (0);
+	if (flags.length_def)
+		return (0);
+	else
+		return (flags.length);
+
+}
+
+int		ft_putnbr(int n, t_flags flags)
+{
+	int		maxcar;
+	int		len;
+
 	len = ft_size_base(n, 0, 10);
+	maxcar = ft_maxcar(n, flags, len);
 	if (flags.alignment == F_RIGHT)
 	{
-		if (flags.prefix == F_ZERO && n < 0)
+		if (flags.prefix == F_NO_PREFIX || flags.precision != F_DEF_PREC)
+			ft_print_spaces(n, flags, len, ft_print_prec_null(n, flags));
+		if (n < 0)
 			ft_putchar_fd('-', 1);
-		ft_print_pref(flags, len, n);
-		ft_print_signed(n, len, precision, !(flags.prefix == F_ZERO && n < 0));
+		if (!(flags.prefix == F_NO_PREFIX || flags.precision != F_DEF_PREC))
+			ft_print_spaces(n, flags, len, ft_print_prec_null(n, flags));
+		ft_print_zeroes_d(len, flags, n < 0);
+		if (flags.precision != 0 || n != 0)
+			ft_print_nbr(n < 0 ? -n : n);
 	}
 	else if (flags.alignment == F_LEFT)
 	{
-		ft_print_signed(n, len, precision, 1);
-		ft_print_pref(flags, len, n);
+		if (n < 0)
+			ft_putchar_fd('-', 1);
+		ft_print_zeroes_d(len, flags, n < 0);
+		if (flags.precision != 0 || n != 0)
+			ft_print_nbr(n < 0 ? -n : n);
+		ft_print_spaces(n, flags, len, ft_print_prec_null(n, flags));
 	}
-	return (ft_result(precision, n, flags, len));
+	if (flags.precision == 0 && n == 0 &&
+		(flags.length_def || flags.length == 0))
+		return (0);
+	return (len <= maxcar ? maxcar : len);
 }
