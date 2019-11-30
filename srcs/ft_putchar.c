@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/14 20:34:27 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/17 20:41:04 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/11/30 19:27:07 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ int		ft_putchar(char c, t_flags flags)
 			spaces++;
 		}
 	}
-	return (flags.length);
+	return (flags.length ? flags.length : 1);
 }
