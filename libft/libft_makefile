@@ -41,6 +41,7 @@ BONUS				= ft_lstnew_bonus.c \
 						ft_lstclear_bonus.c \
 						ft_lstiter_bonus.c \
 						ft_lstmap_bonus.c
+
 BONUSOBJS		 	= ${BONUS:.c=.o}
 OBJS				= ${SRCS:.c=.o}
 GCC					= gcc
@@ -65,7 +66,7 @@ fclean:				clean
 
 re:					fclean all
 
-bonus:				${BONUSOBJS}
+bonus:				${BONUSOBJS} ${NAME}
 					ar rc ${NAME} ${BONUSOBJS}
 					ranlib ${NAME}
 

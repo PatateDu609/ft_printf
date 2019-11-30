@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include <stdio.h>
 
 void			ft_update_flags(t_flags *flags, int waiting)
 {
