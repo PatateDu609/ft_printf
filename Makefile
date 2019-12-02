@@ -19,23 +19,16 @@ LIBFT				=	$(LIBFT_PATH)/libft.a
 ################################################################################
 #                              Name of sources files                           #
 ################################################################################
-EXTENSION			=	.c
-EXTENSION_BONUS		=	_bonus.c
-
-SRCS_COMMON			=	ft_flags		\
-						ft_puthexa		\
-						ft_putnbr		\
-						ft_check_parse	\
-						ft_nbr_utils
-
-SRCS_BASENAME_ONLY	=	ft_putptr		\
-						ft_printf		\
-						ft_putchar		\
-						ft_putstr		\
-						ft_putunsigned
-
-SRCS_BONUS_BN_ONLY	=
-
+SRCS_BASENAME		=	putptr		\
+						printf		\
+						putchar		\
+						putstr		\
+						putunsigned	\
+						flags		\
+						puthexa		\
+						putnbr		\
+						check_parse	\
+						nbr_utils
 
 ################################################################################
 #                             Commands and arguments                           #
@@ -47,18 +40,10 @@ CFLAGS				=	-Wall -Wextra -Werror -I$(LIBFT_PATH)
 ################################################################################
 #                         DO NOT MODIFY BELOW THIS POINT                       #
 ################################################################################
-SRCS_BASENAME		= $(SRCS_BASENAME_ONLY) $(SRCS_COMMON)
-SRCS_BONUS_BASENAME		= $(SRCS_BONUS_BN_ONLY) $(SRCS_COMMON)
+SRCS_EXT			=	$(addsuffix .c, $(SRCS_BASENAME))
 
-SRCS_EXT			=	$(addsuffix $(EXTENSION), $(SRCS_BASENAME))
-SRCS_BONUS_EXT		=	$(addsuffix $(EXTENSION_BONUS), $(SRCS_BONUS_BASENAME))
-
-SRCS_COMMON_EXT		=	$(addsuffix .o, $(SRCS_COMMON))
-SRCS_COMMON_WPATH	=	$(addprefix $(PATH_SRCS)/, $(SRCS_COMMON_EXT))
-
-SRCS				=	$(addprefix $(PATH_SRCS)/, $(SRCS_EXT))
-OBJS				=	$(addprefix $(PATH_OBJS)/, $(SRCS_EXT:.c=.o))
-OBJS_BONUS			=	$(addprefix $(PATH_OBJS)/, $(SRCS_BONUS_EXT:.c=.o))
+SRCS				=	$(addprefix $(PATH_SRCS)/ft_, $(SRCS_EXT))
+OBJS				=	$(addprefix $(PATH_OBJS)/ft_, $(SRCS_EXT:.c=.o))
 
 $(PATH_OBJS)/%.o:	$(PATH_SRCS)/%.c
 					$(GCC) $(CFLAGS) -c $< -o $@
@@ -69,21 +54,18 @@ $(NAME):			$(OBJS) $(LIBFT)
 
 $(LIBFT):
 					make -C $(LIBFT_PATH) -f $(LIBFT_MAKE)
+					make -C $(LIBFT_PATH) -f $(LIBFT_MAKE) bonus
 					mv $(LIBFT) $(NAME)
 
 all:				$(NAME)
 
 clean:
-					$(RM) $(OBJS) $(OBJS_BONUS)
+					$(RM) $(OBJS)
 					make -C $(LIBFT_PATH) -f $(LIBFT_MAKE) clean
 
 fclean:				clean
 					$(RM) $(NAME)
 					make -C $(LIBFT_PATH) -f $(LIBFT_MAKE) fclean
-
-bonus:				$(OBJS_BONUS)
-					ar d $(NAME) $(SRCS_COMMON_WPATH)
-					ar rc $(NAME) $(OBJS_BONUS)
 
 re:					fclean all
 

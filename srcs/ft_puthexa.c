@@ -6,7 +6,7 @@
 /*   By: gboucett <gboucett@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/12 18:09:24 by gboucett          #+#    #+#             */
-/*   Updated: 2019/11/28 18:40:25 by gboucett         ###   ########.fr       */
+/*   Updated: 2019/12/02 00:39:53 by gboucett         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,5 @@ void			ft_puthexa(int mode, unsigned long n, int *size, t_flags flags)
 	else if (len >= precision)
 		*size = (flags.length <= len) ? len : flags.length;
 	else
-		*size = (n < 0) +
-				(precision <= flags.length ? flags.length : precision);
+		*size = precision <= flags.length ? flags.length : precision;
 }
